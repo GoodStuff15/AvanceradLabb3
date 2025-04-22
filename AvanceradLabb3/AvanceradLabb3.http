@@ -1,0 +1,6 @@
+@AvanceradLabb3_HostAddress = http://localhost:5070
+
+GET {{AvanceradLabb3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
