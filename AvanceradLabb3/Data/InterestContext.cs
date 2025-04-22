@@ -84,12 +84,12 @@ namespace AvanceradLabb3.Data
                     "PersonInterest",
                     pi =>
                     {
-                        pi.HasKey("PersonId", "InterestId");
+                        //pi.HasKey("PersonId", "InterestId");
                         pi.HasData(
-                            new { PersonId = 1, InterestId = 1 },
-                            new { PersonId = 2, InterestId = 2 },
-                            new { PersonId = 2, InterestId = 3 },
-                            new { PersonId = 3, InterestId = 3 }
+                            new { PeopleId = 1, InterestsId = 1 },
+                            new { PeopleId = 2, InterestsId = 2 },
+                            new { PeopleId = 2, InterestsId = 3 },
+                            new { PeopleId = 3, InterestsId = 3 }
                         );
                     }
                 );
