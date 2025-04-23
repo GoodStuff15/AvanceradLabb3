@@ -16,7 +16,5 @@ namespace AvanceradLabb3.Models
 
         // Navigation properties
         public ICollection<Interest>? Interests { get; set; }
-
-        public ICollection<Hyperlink>? Links { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace AvanceradLabb3.Models
 
         
         // Navigation properties
-        public LinkCollection? InCollection { get; set; }
+        public Person? Person { get; set; }
+        public Interest? Interest { get; set; }
     }
 }

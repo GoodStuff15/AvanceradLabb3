@@ -92,44 +92,31 @@ namespace AvanceradLabb3.Data
                }
            );
 
-            modelBuilder.Entity<LinkCollection>().HasData(
-
-                new LinkCollection
-                {
-                    Id = 1
-                },
-                new LinkCollection
-                {
-                    Id = 2
-                },
-                 new LinkCollection
-                 {
-                     Id = 3
-                 },
-                 new LinkCollection
-                 {
-                     Id = 4
-                 }
-            );
 
             modelBuilder.Entity<Person>(p =>
             {
                 p.HasMany(p => p.Interests)
                 .WithMany(i => i.People)
+                
                 .UsingEntity(
                     "PersonInterest",
                     pi =>
                     {
-                        //pi.HasKey("PersonId", "InterestId");
+                        
+                        //pi.HasKey("PeopleId", "InterestsId", "LinkCollectionId");
                         pi.HasData(
-                            new { PeopleId = 1, InterestsId = 1, LinkCollectionId = 1 },
-                            new { PeopleId = 2, InterestsId = 2, LinkCollectionId = 2 },
-                            new { PeopleId = 2, InterestsId = 3, LinkCollectionId = 3 },
-                            new { PeopleId = 3, InterestsId = 3, LinkCollectionId = 4 }
+                            new { PeopleId = 1, InterestsId = 1},
+                            new { PeopleId = 2, InterestsId = 2},
+                            new { PeopleId = 2, InterestsId = 3},
+                            new { PeopleId = 3, InterestsId = 3}
                         );
                     }
                 );
             });
+
+            
+
+
 
 
         }

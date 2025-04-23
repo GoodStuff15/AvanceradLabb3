@@ -3,6 +3,7 @@ using AvanceradLabb3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvanceradLabb3.Migrations
 {
     [DbContext(typeof(InterestContext))]
-    partial class InterestContextModelSnapshot : ModelSnapshot
+    [Migration("20250423182054_linkCollection")]
+    partial class linkCollection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +32,7 @@ namespace AvanceradLabb3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("InterestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PersonId")
+                    b.Property<int?>("InCollectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -45,9 +45,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InterestId");
-
-                    b.HasIndex("PersonId");
+                    b.HasIndex("InCollectionId");
 
                     b.ToTable("Hyperlink");
 
@@ -104,6 +102,47 @@ namespace AvanceradLabb3.Migrations
                             Id = 3,
                             Description = "Slåss pang bom krasch!!",
                             Title = "Slåss"
+                        });
+                });
+
+            modelBuilder.Entity("AvanceradLabb3.Models.LinkCollection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("InterestId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PersonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InterestId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("LinkCollection");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
+                        },
+                        new
+                        {
+                            Id = 2
+                        },
+                        new
+                        {
+                            Id = 3
+                        },
+                        new
+                        {
+                            Id = 4
                         });
                 });
 
@@ -199,17 +238,22 @@ namespace AvanceradLabb3.Migrations
 
             modelBuilder.Entity("AvanceradLabb3.Models.Hyperlink", b =>
                 {
-                    b.HasOne("AvanceradLabb3.Models.Interest", "Interest")
+                    b.HasOne("AvanceradLabb3.Models.LinkCollection", "InCollection")
                         .WithMany("Links")
+                        .HasForeignKey("InCollectionId");
+
+                    b.Navigation("InCollection");
+                });
+
+            modelBuilder.Entity("AvanceradLabb3.Models.LinkCollection", b =>
+                {
+                    b.HasOne("AvanceradLabb3.Models.Interest", null)
+                        .WithMany("LinkCollections")
                         .HasForeignKey("InterestId");
 
-                    b.HasOne("AvanceradLabb3.Models.Person", "Person")
-                        .WithMany()
+                    b.HasOne("AvanceradLabb3.Models.Person", null)
+                        .WithMany("LinkCollections")
                         .HasForeignKey("PersonId");
-
-                    b.Navigation("Interest");
-
-                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("PersonInterest", b =>
@@ -229,7 +273,17 @@ namespace AvanceradLabb3.Migrations
 
             modelBuilder.Entity("AvanceradLabb3.Models.Interest", b =>
                 {
+                    b.Navigation("LinkCollections");
+                });
+
+            modelBuilder.Entity("AvanceradLabb3.Models.LinkCollection", b =>
+                {
                     b.Navigation("Links");
+                });
+
+            modelBuilder.Entity("AvanceradLabb3.Models.Person", b =>
+                {
+                    b.Navigation("LinkCollections");
                 });
 #pragma warning restore 612, 618
         }
