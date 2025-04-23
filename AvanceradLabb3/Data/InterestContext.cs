@@ -31,7 +31,7 @@ namespace AvanceradLabb3.Data
                     Id = 1,
                     FirstName = "Gustav",
                     LastName = "Eriksson",
-                    Email = "gustav@swedbonk.se",
+                    Email = "vd@swedbonk.se",
                     Age = 42
                 },
                 new Person
