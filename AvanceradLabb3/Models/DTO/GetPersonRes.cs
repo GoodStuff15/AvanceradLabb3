@@ -1,6 +1,13 @@
-﻿namespace AvanceradLabb3.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AvanceradLabb3.Models.DTO
 {
-    public class GetPersonRes
+    public record GetPersonRes
     {
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+
+        public string? Email { get; init; }
+        public int? Age { get; init; }
     }
 }
