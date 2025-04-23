@@ -3,6 +3,7 @@ using AvanceradLabb3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvanceradLabb3.Migrations
 {
     [DbContext(typeof(InterestContext))]
-    partial class InterestContextModelSnapshot : ModelSnapshot
+    [Migration("20250423120019_schools")]
+    partial class schools
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,13 +32,7 @@ namespace AvanceradLabb3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("InCollectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InterestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PersonId")
+                    b.Property<int?>("LinkCollectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -48,11 +45,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InCollectionId");
-
-                    b.HasIndex("InterestId");
-
-                    b.HasIndex("PersonId");
+                    b.HasIndex("LinkCollectionId");
 
                     b.ToTable("Hyperlink");
 
@@ -196,6 +189,36 @@ namespace AvanceradLabb3.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HyperlinkInterest", b =>
+                {
+                    b.Property<int>("InterestsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LinksId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InterestsId", "LinksId");
+
+                    b.HasIndex("LinksId");
+
+                    b.ToTable("HyperlinkInterest");
+                });
+
+            modelBuilder.Entity("HyperlinkPerson", b =>
+                {
+                    b.Property<int>("LinksId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeopleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LinksId", "PeopleId");
+
+                    b.HasIndex("PeopleId");
+
+                    b.ToTable("HyperlinkPerson");
+                });
+
             modelBuilder.Entity("PersonInterest", b =>
                 {
                     b.Property<int>("InterestsId")
@@ -235,19 +258,39 @@ namespace AvanceradLabb3.Migrations
 
             modelBuilder.Entity("AvanceradLabb3.Models.Hyperlink", b =>
                 {
-                    b.HasOne("AvanceradLabb3.Models.LinkCollection", "InCollection")
+                    b.HasOne("AvanceradLabb3.Models.LinkCollection", null)
                         .WithMany("Links")
-                        .HasForeignKey("InCollectionId");
+                        .HasForeignKey("LinkCollectionId");
+                });
 
+            modelBuilder.Entity("HyperlinkInterest", b =>
+                {
                     b.HasOne("AvanceradLabb3.Models.Interest", null)
-                        .WithMany("Links")
-                        .HasForeignKey("InterestId");
+                        .WithMany()
+                        .HasForeignKey("InterestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AvanceradLabb3.Models.Hyperlink", null)
+                        .WithMany()
+                        .HasForeignKey("LinksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HyperlinkPerson", b =>
+                {
+                    b.HasOne("AvanceradLabb3.Models.Hyperlink", null)
+                        .WithMany()
+                        .HasForeignKey("LinksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AvanceradLabb3.Models.Person", null)
-                        .WithMany("Links")
-                        .HasForeignKey("PersonId");
-
-                    b.Navigation("InCollection");
+                        .WithMany()
+                        .HasForeignKey("PeopleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PersonInterest", b =>
@@ -265,17 +308,7 @@ namespace AvanceradLabb3.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AvanceradLabb3.Models.Interest", b =>
-                {
-                    b.Navigation("Links");
-                });
-
             modelBuilder.Entity("AvanceradLabb3.Models.LinkCollection", b =>
-                {
-                    b.Navigation("Links");
-                });
-
-            modelBuilder.Entity("AvanceradLabb3.Models.Person", b =>
                 {
                     b.Navigation("Links");
                 });
