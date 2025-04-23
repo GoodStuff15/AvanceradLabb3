@@ -13,12 +13,8 @@ namespace AvanceradLabb3.Models
         [Url]
         public string Url { get; set; }
 
+        
         // Navigation properties
-
-        
-        public Person Person { get; set; }
-        
-        public Interest Interest { get; set; }
-
+        public LinkCollection? InCollection { get; set; }
     }
 }

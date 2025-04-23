@@ -76,6 +76,42 @@ namespace AvanceradLabb3.Data
 
             );
 
+            modelBuilder.Entity<Hyperlink>().HasData(
+
+               new Hyperlink
+               {
+                   Id = 1,
+                   Title = "Scryfall",
+                   Url = "http://www.scryfall.com"
+               },
+               new Hyperlink
+               {
+                   Id = 2,
+                   Title = "Biltema",
+                   Url = "http://www.biltema.com"
+               }
+           );
+
+            modelBuilder.Entity<LinkCollection>().HasData(
+
+                new LinkCollection
+                {
+                    Id = 1
+                },
+                new LinkCollection
+                {
+                    Id = 2
+                },
+                 new LinkCollection
+                 {
+                     Id = 3
+                 },
+                 new LinkCollection
+                 {
+                     Id = 4
+                 }
+            );
+
             modelBuilder.Entity<Person>(p =>
             {
                 p.HasMany(p => p.Interests)
@@ -86,14 +122,16 @@ namespace AvanceradLabb3.Data
                     {
                         //pi.HasKey("PersonId", "InterestId");
                         pi.HasData(
-                            new { PeopleId = 1, InterestsId = 1 },
-                            new { PeopleId = 2, InterestsId = 2 },
-                            new { PeopleId = 2, InterestsId = 3 },
-                            new { PeopleId = 3, InterestsId = 3 }
+                            new { PeopleId = 1, InterestsId = 1, LinkCollectionId = 1 },
+                            new { PeopleId = 2, InterestsId = 2, LinkCollectionId = 2 },
+                            new { PeopleId = 2, InterestsId = 3, LinkCollectionId = 3 },
+                            new { PeopleId = 3, InterestsId = 3, LinkCollectionId = 4 }
                         );
                     }
                 );
             });
+
+
         }
     }
 }

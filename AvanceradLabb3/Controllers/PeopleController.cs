@@ -28,7 +28,7 @@ namespace AvanceradLabb3.Controllers
         [HttpGet("Get all de people")]
         public async Task<ActionResult<ICollection<Person>>> GetAllPeople()
         {
-
+            return null;
         }
 
         // UPDATE
@@ -36,7 +36,7 @@ namespace AvanceradLabb3.Controllers
         public async Task<ActionResult> UpdatePerson(int id)
         {
 
-
+            return null;
         }
 
 
@@ -44,7 +44,7 @@ namespace AvanceradLabb3.Controllers
         [HttpDelete("{id}", Name = "Delete person")]
         public async Task<ActionResult> DeletePerson(int id)
         {
-
+            return null;
         }
     }
 }
