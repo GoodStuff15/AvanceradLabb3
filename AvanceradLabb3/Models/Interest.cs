@@ -13,5 +13,7 @@ namespace AvanceradLabb3.Models
 
         // Navigation properties
         public ICollection<Person>? People { get; set; }
+
+        public ICollection<Hyperlink>? Links { get; set; }
     }
 }
