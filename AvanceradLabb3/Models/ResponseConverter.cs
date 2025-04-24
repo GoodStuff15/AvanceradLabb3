@@ -37,12 +37,12 @@ namespace AvanceradLabb3.Models
             return result;
         }
 
-        public static ICollection<AddInterestReq> ToInterestList(ICollection<Interest> request)
+        public static ICollection<InterestDTO> ToInterestList(ICollection<Interest> request)
         {
-            ICollection<AddInterestReq> result = new HashSet<AddInterestReq>();
+            ICollection<InterestDTO> result = new HashSet<InterestDTO>();
             foreach (var interest in request)
             {
-                result.Add(new AddInterestReq
+                result.Add(new InterestDTO
                 {
                     Title = interest.Title,
                     Description = interest.Description
