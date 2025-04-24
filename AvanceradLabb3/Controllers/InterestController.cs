@@ -44,7 +44,7 @@ namespace AvanceradLabb3.Controllers
         [HttpGet(Name = "Get all interests")]
         public async Task<ActionResult<ICollection<GetInterestRes>>> GetAll()
         {
-            await _repo.GetAll();
+            return Ok(await _repo.GetAll());
         }
 
         [HttpGet("{id}", Name = "Get Interest By Id")]
@@ -52,7 +52,10 @@ namespace AvanceradLabb3.Controllers
         {
             var getMe = await _repo.GetById(id);
 
-            if (getMe == null) { return NotFound(); }
+            if (getMe == null) 
+            { 
+                return NotFound(); 
+            }
 
             var returnThis = new GetInterestRes
             {

@@ -29,13 +29,7 @@ namespace AvanceradLabb3.Controllers
                 return BadRequest();
             }
 
-            var addPerson = new Person
-            {
-                FirstName = addMe.FirstName,
-                LastName = addMe.LastName,
-                Email = addMe.Email,
-                Age = addMe.Age
-            };
+            var addPerson = ResponseConverter.ToPerson(addMe);
 
             await _repo.Create(addPerson);
 
@@ -48,29 +42,8 @@ namespace AvanceradLabb3.Controllers
         public async Task<ActionResult<ICollection<GetPersonRes>>> GetAllPeople()
         {
             var allPeople = await _repo.GetAllWithExtra();
+            var result = ResponseConverter.ToPersonList(allPeople);
 
-
-            ICollection<GetPersonRes> result = new List<GetPersonRes>();
-            foreach (var person in allPeople)
-            {
-                var convertInterests = new List<AddInterestReq>();
-                foreach (var ints in person.Interests) 
-                {
-                    convertInterests.Add(new AddInterestReq
-                    {
-                        Title = ints.Title,
-                        Description = ints.Description,
-                    });
-                }
-                result.Add(new GetPersonRes
-                {
-                    FirstName = person.FirstName,
-                    LastName = person.LastName,
-                    Email = person.Email,
-                    Age = person.Age,
-                    Interests = convertInterests
-                });
-            }
             return Ok(result);
         }
 
