@@ -49,7 +49,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Hyperlink");
+                    b.ToTable("Hyperlink", (string)null);
 
                     b.HasData(
                         new
@@ -84,7 +84,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Interests");
+                    b.ToTable("Interests", (string)null);
 
                     b.HasData(
                         new
@@ -131,7 +131,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("People");
+                    b.ToTable("People", (string)null);
 
                     b.HasData(
                         new
@@ -172,7 +172,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasIndex("PeopleId");
 
-                    b.ToTable("PersonInterest");
+                    b.ToTable("PersonInterest", (string)null);
 
                     b.HasData(
                         new

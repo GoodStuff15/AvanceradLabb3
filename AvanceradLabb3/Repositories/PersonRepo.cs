@@ -30,6 +30,16 @@ namespace AvanceradLabb3.Repositories
             return await _ctx.People.ToListAsync();
         }
 
+        public async Task<ICollection<Person>> GetAllWithExtra()
+        {
+            return await _ctx.People.Include(i => i.Interests).ToListAsync();
+        }
+
+        //public async Task<Person?> GetByIdExtraAll(int id)
+        //{
+        //    //return await _ctx.People.Include(i => i.Interests).FindAsync(id);
+        //}
+
         public async Task<Person?> GetById(int id)
         {
           

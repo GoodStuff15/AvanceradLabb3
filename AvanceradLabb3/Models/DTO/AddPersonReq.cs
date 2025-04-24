@@ -1,12 +1,13 @@
 ﻿namespace AvanceradLabb3.Models.DTO
 {
-    public class AddPersonReq
+    public record AddPersonReq
     {
-        public int Id { get; init; }
+        public string FirstName { get; init; }
 
-        public string Title { get; init; }
+        public string LastName { get; init; }
 
-        public string Description { get; init; }
+        public string Email { get; init; }
+        public int Age { get; init; }
 
 
     }
