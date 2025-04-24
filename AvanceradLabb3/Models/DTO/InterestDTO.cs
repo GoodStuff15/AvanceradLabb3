@@ -1,6 +1,6 @@
 ﻿namespace AvanceradLabb3.Models.DTO
 {
-    public record AddInterestReq
+    public record InterestDTO
     {
         public string Title { get; init; }
 

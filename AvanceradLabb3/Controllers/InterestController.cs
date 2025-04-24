@@ -21,7 +21,7 @@ namespace AvanceradLabb3.Controllers
         // CREATE
 
         [HttpPost(Name = "Add interest to database")]
-        public async Task<ActionResult> AddInterest(AddInterestReq newInterest)
+        public async Task<ActionResult> AddInterest(InterestDTO newInterest)
         {
             if (newInterest == null)
             {
@@ -42,19 +42,22 @@ namespace AvanceradLabb3.Controllers
         // READ
 
         [HttpGet(Name = "Get all interests")]
-        public async Task<ActionResult<ICollection<GetInterestRes>>> GetAll()
+        public async Task<ActionResult<ICollection<InterestDTO>>> GetAll()
         {
-            await _repo.GetAll();
+            return Ok(await _repo.GetAll());
         }
 
         [HttpGet("{id}", Name = "Get Interest By Id")]
-        public async Task<ActionResult<GetInterestRes>> GetById(int id)
+        public async Task<ActionResult<InterestDTO>> GetById(int id)
         {
             var getMe = await _repo.GetById(id);
 
-            if (getMe == null) { return NotFound(); }
+            if (getMe == null) 
+            { 
+                return NotFound(); 
+            }
 
-            var returnThis = new GetInterestRes
+            var returnThis = new InterestDTO
             {
                 Title = getMe.Title,
                 Description = getMe.Description
@@ -67,7 +70,7 @@ namespace AvanceradLabb3.Controllers
         // UPDATE
 
         [HttpPut("{id}", Name = "Update an interest")]
-        public async Task<ActionResult> UpdateInterest(AddInterestReq updatedInterest, int id)
+        public async Task<ActionResult> UpdateInterest(InterestDTO updatedInterest, int id)
         {
             var updateThis = await _repo.GetById(id);
             if (updateThis == null)

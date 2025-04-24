@@ -63,7 +63,7 @@ Din första uppgift är att skapa ett grundläggande API med en databas som har föl
 
 Det andra steget är att skapa ett REST-API som låter externa tjänster utföra följande operationer i din applikation:
 
-- [ ]  Hämta alla personer i systemet  CHECK
+- [X]  Hämta alla personer i systemet
 - [ ]  Hämta alla intressen kopplade till en specifik person
 - [ ]  Hämta alla länkar kopplade till en specifik person
 - [ ]  Koppla en person till ett nytt intresse
