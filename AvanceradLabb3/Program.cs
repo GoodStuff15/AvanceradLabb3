@@ -16,7 +16,7 @@ namespace AvanceradLabb3
 
             builder.Services.AddScoped<IPersonRepo, PersonRepo>();
             builder.Services.AddScoped<IInterestRepo, InterestRepo>();
-            builder.Services.AddScoped<ILinkRepo, LinkRepo>();
+            //builder.Services.AddScoped<ILinkRepo, LinkRepo>();
             builder.Services.AddDbContext<InterestContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddControllers();
             builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -63,7 +63,7 @@ Din första uppgift är att skapa ett grundläggande API med en databas som har föl
 
 Det andra steget är att skapa ett REST-API som låter externa tjänster utföra följande operationer i din applikation:
 
-- [ ]  Hämta alla personer i systemet
+- [ ]  Hämta alla personer i systemet  CHECK
 - [ ]  Hämta alla intressen kopplade till en specifik person
 - [ ]  Hämta alla länkar kopplade till en specifik person
 - [ ]  Koppla en person till ett nytt intresse
