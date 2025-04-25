@@ -10,6 +10,7 @@ namespace AvanceradLabb3.Models.DTO
         public string? Email { get; init; }
         public int? Age { get; init; }
 
-        public ICollection<AddInterestReq>? Interests { get; init; } 
+        public ICollection<InterestDTO>? Interests { get; init; } 
+        public ICollection<LinkDTO>? Links { get; init; } 
     }
 }

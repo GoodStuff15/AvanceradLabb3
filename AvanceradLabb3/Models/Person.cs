@@ -15,6 +15,8 @@ namespace AvanceradLabb3.Models
         public int? Age { get; set; }
 
         // Navigation properties
-        public ICollection<Interest>? Interests { get; set; }
+        public ICollection<Interest>? Interests { get; set; } = new List<Interest>();
+
+        public ICollection<Hyperlink>? Links { get; set; } = new List<Hyperlink>();
     }
 }

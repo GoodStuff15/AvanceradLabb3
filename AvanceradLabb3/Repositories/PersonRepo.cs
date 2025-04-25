@@ -13,6 +13,7 @@ namespace AvanceradLabb3.Repositories
             _ctx = ctx;
         }
 
+
         public async Task Create(Person t)
         {
             await _ctx.People.AddAsync(t);
@@ -32,7 +33,9 @@ namespace AvanceradLabb3.Repositories
 
         public async Task<ICollection<Person>> GetAllWithExtra()
         {
-            return await _ctx.People.Include(i => i.Interests).ToListAsync();
+            return await _ctx.People.Include(i => i.Interests)
+                                    .ThenInclude(l => l.Links)
+                                    .ToListAsync();
         }
 
         //public async Task<Person?> GetByIdExtraAll(int id)
@@ -46,6 +49,8 @@ namespace AvanceradLabb3.Repositories
             return await _ctx.People.FindAsync(id);
         }
 
+        // UPDATE
+
         public async Task Update(Person t)
         {
             _ctx.People.Update(t);
@@ -53,5 +58,14 @@ namespace AvanceradLabb3.Repositories
         
             
         }
+
+        public async Task AddInterestToPerson(Person p, int interestId)
+        {
+            var addThis = await _ctx.Interests.FindAsync(interestId);
+            p.Interests.Add(addThis);
+            _ctx.People.Update(p);
+            await _ctx.SaveChangesAsync();
+        }
+
     }
 }

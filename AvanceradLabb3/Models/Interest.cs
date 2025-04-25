@@ -7,9 +7,9 @@ namespace AvanceradLabb3.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Title {  get; set; }
+        public string? Title {  get; set; }
         [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         // Navigation properties
         public ICollection<Person>? People { get; set; }

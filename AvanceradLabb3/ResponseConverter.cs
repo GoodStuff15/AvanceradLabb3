@@ -18,6 +18,18 @@ namespace AvanceradLabb3.Models
             return person;
         }
 
+        public static AddPersonReq ToPersonReq(Person request)
+        {
+            AddPersonReq person = new AddPersonReq
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Age = (int)request.Age
+            };
+            return person;
+        }
+
         public static ICollection<GetPersonRes> ToPersonList(ICollection<Person> request)
         {
             ICollection<GetPersonRes> result = new HashSet<GetPersonRes>();
@@ -30,7 +42,8 @@ namespace AvanceradLabb3.Models
                     LastName = person.LastName,
                     Email = person.Email,
                     Age = person.Age,
-                    Interests = ToInterestList(person.Interests)
+                    Interests = ToInterestList(person.Interests),
+                    Links = ToLinkList(person.Links)
                 });
             }
 
@@ -51,6 +64,22 @@ namespace AvanceradLabb3.Models
 
             return result;
 
+        }
+
+        public static ICollection<LinkDTO> ToLinkList(ICollection<Hyperlink> request)
+        {
+            ICollection<LinkDTO> result = new HashSet<LinkDTO>();
+
+            foreach(var link in request)
+            {
+                result.Add(new LinkDTO
+                {
+                    Title = link.Title,
+                    Url = link.Url
+                });
+            }
+
+            return result;
         }
 
     }
