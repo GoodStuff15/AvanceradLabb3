@@ -1,9 +1,8 @@
 ﻿namespace AvanceradLabb3.Models.DTO
 {
-    public record InterestDTO
+    public record LinkDTO
     {
         public string? Title { get; init; }
-
-        public string? Description { get; init; }
+        public string? Url { get; init; }
     }
 }

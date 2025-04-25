@@ -47,40 +47,18 @@ namespace AvanceradLabb3.Controllers
             return Ok(result);
         }
 
-        //[HttpGet("{id}", Name = "Get Person By Id")]
-        //public async Task<ActionResult<GetPersonRes>> GetPeopleById(int id)
-        //{
-        //    var gotPerson = await _repo.GetById(id);
-        //    if (gotPerson == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var result = new GetPersonRes
-        //    {
-        //        FirstName = gotPerson.FirstName,
-        //        LastName = gotPerson.LastName,
-        //        Email = gotPerson.Email,
-        //        Age = gotPerson.Age,
-        //    };
-        //    return Ok(result);
-        //}
+        [HttpGet("{id}", Name = "Get Person By Id")]
+        public async Task<ActionResult<GetPersonRes>> GetPeopleById(int id)
+        {
+            var gotPerson = await _repo.GetById(id);
+            if (gotPerson == null)
+            {
+                return NotFound();
+            }
 
-        //[HttpGet("{id}", Name = "Get Person with Interests")]
-        //public async Task<ActionResult<GetPersonRes>> GetWithInterests(int id)
-        //{
-        //    var getMe = await _repo.GetById(id);
-        //    if (getMe == null) { return NotFound(); }
+            return Ok(ResponseConverter.ToPersonReq(gotPerson));
+        }
 
-        //    var result = new GetPersonRes
-        //    {
-        //        FirstName = getMe.FirstName,
-        //        LastName = getMe.LastName,
-        //        Email = getMe.Email,
-        //        Age = getMe.Age,
-        //        Interests = getMe.Interests
-        //    };
-        //    return Ok(result);
-        //}
 
         // UPDATE
         [HttpPut("{id}", Name = "Update person")]
@@ -98,9 +76,22 @@ namespace AvanceradLabb3.Controllers
 
             await _repo.Update(updateThis);
 
-            return Ok("Person has been updated");
+            return Ok($"{updateThis.FirstName} has been updated");
         }
 
+        [HttpPut("Details", Name = "Add interest to person")]
+        public async Task<ActionResult> AddInterestToPerson(int personId, int interestId)
+        {
+            var addToMe = await _repo.GetById(personId);
+            
+            if (addToMe == null) 
+            { return NotFound(); }
+
+            await _repo.AddInterestToPerson(addToMe, interestId);
+
+            return Ok($"Interest added to {addToMe.FirstName}");
+            
+        }
 
         // DELETE
         [HttpDelete("{id}", Name = "Delete person")]

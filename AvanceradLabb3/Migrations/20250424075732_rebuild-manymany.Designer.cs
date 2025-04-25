@@ -3,6 +3,7 @@ using AvanceradLabb3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvanceradLabb3.Migrations
 {
     [DbContext(typeof(InterestContext))]
-    partial class InterestContextModelSnapshot : ModelSnapshot
+    [Migration("20250424075732_rebuild-manymany")]
+    partial class rebuildmanymany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,7 +214,7 @@ namespace AvanceradLabb3.Migrations
                         .HasForeignKey("InterestId");
 
                     b.HasOne("AvanceradLabb3.Models.Person", "Person")
-                        .WithMany("Links")
+                        .WithMany()
                         .HasForeignKey("PersonId");
 
                     b.HasOne("AvanceradLabb3.Models.PersonInterest", null)
@@ -239,11 +242,6 @@ namespace AvanceradLabb3.Migrations
                 });
 
             modelBuilder.Entity("AvanceradLabb3.Models.Interest", b =>
-                {
-                    b.Navigation("Links");
-                });
-
-            modelBuilder.Entity("AvanceradLabb3.Models.Person", b =>
                 {
                     b.Navigation("Links");
                 });

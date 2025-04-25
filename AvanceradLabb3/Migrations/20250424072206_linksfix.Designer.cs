@@ -3,6 +3,7 @@ using AvanceradLabb3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvanceradLabb3.Migrations
 {
     [DbContext(typeof(InterestContext))]
-    partial class InterestContextModelSnapshot : ModelSnapshot
+    [Migration("20250424072206_linksfix")]
+    partial class linksfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,13 +38,8 @@ namespace AvanceradLabb3.Migrations
                     b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonInterestInterestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PersonInterestPersonId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -54,9 +52,7 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.HasIndex("PersonInterestPersonId", "PersonInterestInterestId");
-
-                    b.ToTable("Hyperlinks");
+                    b.ToTable("Hyperlink");
 
                     b.HasData(
                         new
@@ -167,40 +163,40 @@ namespace AvanceradLabb3.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AvanceradLabb3.Models.PersonInterest", b =>
+            modelBuilder.Entity("PersonInterest", b =>
                 {
-                    b.Property<int>("PersonId")
+                    b.Property<int>("InterestsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("InterestId")
+                    b.Property<int>("PeopleId")
                         .HasColumnType("int");
 
-                    b.HasKey("PersonId", "InterestId");
+                    b.HasKey("InterestsId", "PeopleId");
 
-                    b.HasIndex("InterestId");
+                    b.HasIndex("PeopleId");
 
                     b.ToTable("PersonInterest");
 
                     b.HasData(
                         new
                         {
-                            PersonId = 1,
-                            InterestId = 2
+                            InterestsId = 1,
+                            PeopleId = 1
                         },
                         new
                         {
-                            PersonId = 2,
-                            InterestId = 2
+                            InterestsId = 2,
+                            PeopleId = 2
                         },
                         new
                         {
-                            PersonId = 2,
-                            InterestId = 3
+                            InterestsId = 3,
+                            PeopleId = 2
                         },
                         new
                         {
-                            PersonId = 3,
-                            InterestId = 3
+                            InterestsId = 3,
+                            PeopleId = 3
                         });
                 });
 
@@ -211,44 +207,30 @@ namespace AvanceradLabb3.Migrations
                         .HasForeignKey("InterestId");
 
                     b.HasOne("AvanceradLabb3.Models.Person", "Person")
-                        .WithMany("Links")
+                        .WithMany()
                         .HasForeignKey("PersonId");
-
-                    b.HasOne("AvanceradLabb3.Models.PersonInterest", null)
-                        .WithMany("Links")
-                        .HasForeignKey("PersonInterestPersonId", "PersonInterestInterestId");
 
                     b.Navigation("Interest");
 
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("AvanceradLabb3.Models.PersonInterest", b =>
+            modelBuilder.Entity("PersonInterest", b =>
                 {
                     b.HasOne("AvanceradLabb3.Models.Interest", null)
                         .WithMany()
-                        .HasForeignKey("InterestId")
+                        .HasForeignKey("InterestsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AvanceradLabb3.Models.Person", null)
                         .WithMany()
-                        .HasForeignKey("PersonId")
+                        .HasForeignKey("PeopleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("AvanceradLabb3.Models.Interest", b =>
-                {
-                    b.Navigation("Links");
-                });
-
-            modelBuilder.Entity("AvanceradLabb3.Models.Person", b =>
-                {
-                    b.Navigation("Links");
-                });
-
-            modelBuilder.Entity("AvanceradLabb3.Models.PersonInterest", b =>
                 {
                     b.Navigation("Links");
                 });

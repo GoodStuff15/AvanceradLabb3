@@ -66,6 +66,21 @@ namespace AvanceradLabb3.Controllers
             return Ok(returnThis);
         }
 
+        [HttpGet("Details", Name = "Get Interests from PersonId")]
+        public async Task<ActionResult<ICollection<InterestDTO>>> GetInterestsFromPerson(int personId)
+        {
+            var result = await _repo.GetInterestsByPerson(personId);
+
+            if(result == null)
+            {
+                return NotFound("Not Found");
+            }
+            var response = ResponseConverter.ToInterestList(result);
+
+            return Ok(response);
+                         
+        }
+
 
         // UPDATE
 

@@ -1,5 +1,6 @@
 ﻿using AvanceradLabb3.Data;
 using AvanceradLabb3.Models;
+using AvanceradLabb3.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace AvanceradLabb3.Repositories
@@ -32,6 +33,16 @@ namespace AvanceradLabb3.Repositories
         public async Task<Interest?> GetById(int id)
         {
             return await _ctx.Interests.FindAsync(id);
+        }
+
+        public async Task<ICollection<Interest>> GetInterestsByPerson(int personId)
+        {
+            var person = await _ctx.People.FindAsync(personId);
+            var query = await _ctx.Interests
+                        .Where(p => p.People.Contains(person))
+                        .ToListAsync();
+
+            return query;
         }
 
         public async Task Update(Interest t)

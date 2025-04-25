@@ -3,6 +3,7 @@ using AvanceradLabb3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvanceradLabb3.Migrations
 {
     [DbContext(typeof(InterestContext))]
-    partial class InterestContextModelSnapshot : ModelSnapshot
+    [Migration("20250424074744_restart-db")]
+    partial class restartdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +45,7 @@ namespace AvanceradLabb3.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
@@ -179,29 +183,22 @@ namespace AvanceradLabb3.Migrations
 
                     b.HasIndex("InterestId");
 
-                    b.ToTable("PersonInterest");
+                    b.ToTable("PersonInterests");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            PersonId = 1,
-                            InterestId = 2
-                        },
-                        new
-                        {
-                            PersonId = 2,
-                            InterestId = 2
-                        },
-                        new
-                        {
-                            PersonId = 2,
-                            InterestId = 3
-                        },
-                        new
-                        {
-                            PersonId = 3,
-                            InterestId = 3
-                        });
+            modelBuilder.Entity("InterestPerson", b =>
+                {
+                    b.Property<int>("InterestsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeopleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("InterestsId", "PeopleId");
+
+                    b.HasIndex("PeopleId");
+
+                    b.ToTable("InterestPerson");
                 });
 
             modelBuilder.Entity("AvanceradLabb3.Models.Hyperlink", b =>
@@ -211,7 +208,7 @@ namespace AvanceradLabb3.Migrations
                         .HasForeignKey("InterestId");
 
                     b.HasOne("AvanceradLabb3.Models.Person", "Person")
-                        .WithMany("Links")
+                        .WithMany()
                         .HasForeignKey("PersonId");
 
                     b.HasOne("AvanceradLabb3.Models.PersonInterest", null)
@@ -225,25 +222,39 @@ namespace AvanceradLabb3.Migrations
 
             modelBuilder.Entity("AvanceradLabb3.Models.PersonInterest", b =>
                 {
-                    b.HasOne("AvanceradLabb3.Models.Interest", null)
+                    b.HasOne("AvanceradLabb3.Models.Interest", "Interest")
                         .WithMany()
                         .HasForeignKey("InterestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AvanceradLabb3.Models.Person", null)
+                    b.HasOne("AvanceradLabb3.Models.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Interest");
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("InterestPerson", b =>
+                {
+                    b.HasOne("AvanceradLabb3.Models.Interest", null)
+                        .WithMany()
+                        .HasForeignKey("InterestsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AvanceradLabb3.Models.Person", null)
+                        .WithMany()
+                        .HasForeignKey("PeopleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("AvanceradLabb3.Models.Interest", b =>
-                {
-                    b.Navigation("Links");
-                });
-
-            modelBuilder.Entity("AvanceradLabb3.Models.Person", b =>
                 {
                     b.Navigation("Links");
                 });

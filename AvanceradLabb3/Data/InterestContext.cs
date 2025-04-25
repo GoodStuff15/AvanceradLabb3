@@ -10,6 +10,8 @@ namespace AvanceradLabb3.Data
 
         public DbSet<Interest> Interests => Set<Interest>();
 
+        public DbSet<Hyperlink> Hyperlinks => Set<Hyperlink>();
+
         public InterestContext(DbContextOptions<InterestContext> options) : base(options)
         {
 
@@ -82,7 +84,10 @@ namespace AvanceradLabb3.Data
                {
                    Id = 1,
                    Title = "Scryfall",
-                   Url = "http://www.scryfall.com"
+                   Url = "http://www.scryfall.com",
+                   
+                   
+                   
                },
                new Hyperlink
                {
@@ -94,30 +99,21 @@ namespace AvanceradLabb3.Data
 
 
             modelBuilder.Entity<Person>(p =>
-            {
-                p.HasMany(p => p.Interests)
-                .WithMany(i => i.People)
-                
-                .UsingEntity(
-                    "PersonInterest",
-                    pi =>
-                    {
-                        
-                        //pi.HasKey("PeopleId", "InterestsId", "LinkCollectionId");
-                        pi.HasData(
-                            new { PeopleId = 1, InterestsId = 1},
-                            new { PeopleId = 2, InterestsId = 2},
-                            new { PeopleId = 2, InterestsId = 3},
-                            new { PeopleId = 3, InterestsId = 3}
-                        );
-                    }
-                );
-            });
 
-            
+                p.HasMany(i => i.Interests)
+                .WithMany(p => p.People)
+                .UsingEntity<PersonInterest>(pi =>
 
+                    pi.HasData(
+                    new PersonInterest { PersonId = 1, InterestId = 2 },
+                    new PersonInterest { PersonId = 2, InterestId = 2 },
+                    new PersonInterest { PersonId = 2, InterestId = 3 },
+                    new PersonInterest { PersonId = 3, InterestId = 3 }
 
+                    )
+                )
 
+            );
 
         }
     }

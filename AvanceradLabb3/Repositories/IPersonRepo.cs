@@ -7,5 +7,7 @@ namespace AvanceradLabb3.Repositories
     {
         public Task<ICollection<Person>> GetAllWithExtra();
 
+        public Task AddInterestToPerson(Person p, int interestId);
+
     }
 }
